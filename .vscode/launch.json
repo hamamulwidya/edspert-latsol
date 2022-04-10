@@ -8,6 +8,7 @@
             "name": "git_project",
             "request": "launch",
             "type": "dart"
+            // "deviceId": "chrome"
         },
         {
             "name": "git_project (profile mode)",

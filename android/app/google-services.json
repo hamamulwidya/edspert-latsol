@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "604293972193",
+    "project_id": "latihansoal-edsper",
+    "storage_bucket": "latihansoal-edsper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604293972193:android:ef4d43eead0895abf6f7a0",
+        "android_client_info": {
+          "package_name": "com.example.git_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604293972193-1so9i4hv1cha7k8j1voomr32acf2vr1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYHYiNJpGu71Kbp_wNKehIrpXC5gmFDSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604293972193-1so9i4hv1cha7k8j1voomr32acf2vr1a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

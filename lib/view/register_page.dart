@@ -31,8 +31,12 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
+      backgroundColor: Color(0xfff0f3f5),
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(25.0),
+                bottomRight: Radius.circular(25.0))),
         elevation: 0,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
@@ -48,7 +52,8 @@ class _RegisterPageState extends State<RegisterPage> {
           child: ButtonLogin(
             onTap: () {
               print(emailController.text);
-              Navigator.of(context).pushNamedAndRemoveUntil(MainPage.route, (context)=>false);
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(MainPage.route, (context) => false);
             },
             backgroundColor: R.colors.primary,
             borderColor: R.colors.primary,
