@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:git_project/constants/r.dart';
+import 'package:git_project/controller/AuthProviderController.dart';
 import 'package:git_project/view/register_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,6 +16,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late AuthProviderCotroller controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = Provider.of<AuthProviderCotroller>(context, listen: false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,8 +64,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Spacer(),
             ButtonLogin(
-              onTap: () {
-                Navigator.of(context).pushNamed(RegisterPage.route);
+              onTap: () async {
+                controller.signin(context);
               },
               backgroundColor: Colors.white,
               borderColor: R.colors.primary,

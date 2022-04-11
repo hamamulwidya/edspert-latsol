@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:git_project/constants/r.dart';
+import 'package:git_project/model/album.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,6 +13,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Album? album;
+  fetchData() async {
+    final uri = Uri.parse("https://jsonplaceholder.typicode.com/albums/1");
+    final result = await http.get(uri);
+    if (result.statusCode == 200) {
+      final json = jsonDecode(result.body);
+      album = Album.fromJson(json);
+      setState(() {});
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Opps,ada masalah")));
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +41,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
+            if (album != null) Text(album!.title!) else Text("Belum ada data"),
             _buildUserSEction(),
             _buildBanner(context),
             Container(

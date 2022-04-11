@@ -1,8 +1,13 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:git_project/constants/r.dart';
+import 'package:git_project/controller/AuthProviderController.dart';
 import 'package:git_project/view/login_page.dart';
+import 'package:git_project/view/main_page.dart';
+import 'package:git_project/view/register_page.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -10,11 +15,8 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 5), () {
-      // Navigator.of(context)
-      //     .push(MaterialPageRoute(builder: (context) => LoginPage()));
-      Navigator.of(context).pushReplacementNamed(LoginPage.route);
-    });
+    Provider.of<AuthProviderCotroller>(context, listen: false)
+        .directAfterSplashScren(context);
 
     return Scaffold(
       backgroundColor: R.colors.primary,
