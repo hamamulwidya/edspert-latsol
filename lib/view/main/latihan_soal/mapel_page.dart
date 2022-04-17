@@ -22,7 +22,9 @@ class MapelPage extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).pushNamed(PakeSoalPage.route);
               },
-              child: MapelWidget());
+              child: MapelWidget(
+                title: "",
+              ));
         }),
       ),
     );

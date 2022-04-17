@@ -173,18 +173,30 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           GestureDetector(
-            onTap:() async {
-              if(kIsWeb){
-                
-              await GoogleSignIn(
-                clientId: "604293972193-n678jbsfgjp9416d8nnibndjtumviia8.apps.googleusercontent.com"
-              ).signOut();
-              } else {
-
-              await GoogleSignIn().signOut();
+            onTap: () async {
+              try {
+                if (!kIsWeb) {
+                  await GoogleSignIn().signOut();
+                } else {
+                  GoogleSignIn _googleSignIn = GoogleSignIn(
+                    // Optional clientId
+                    clientId:
+                        '604293972193-1so9i4hv1cha7k8j1voomr32acf2vr1a.apps.googleusercontent.com',
+                    scopes: <String>[
+                      'email',
+                      'https://www.googleapis.com/auth/contacts.readonly',
+                    ],
+                  );
+                  await _googleSignIn.signOut();
+                }
+                print(FirebaseAuth.instance.currentUser?.displayName);
+                await FirebaseAuth.instance.signOut();
+                print(FirebaseAuth.instance.currentUser?.displayName);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(LoginPage.route, (route) => false);
+              } catch (e) {
+                print(e);
               }
-              await FirebaseAuth.instance.signOut();
-              Navigator.of(context).pushNamedAndRemoveUntil(LoginPage.route, (route) => false);
             },
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 13),
@@ -193,7 +205,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
-                  BoxShadow(blurRadius: 7, color: Colors.black.withOpacity(0.25))
+                  BoxShadow(
+                      blurRadius: 7, color: Colors.black.withOpacity(0.25))
                 ],
               ),
               child: Row(children: [

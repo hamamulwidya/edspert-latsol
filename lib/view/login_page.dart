@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:git_project/constants/r.dart';
+import 'package:git_project/models/data_by_user_email.dart';
+import 'package:git_project/repository/auth_api.dart';
+import 'package:git_project/view/main_page.dart';
 import 'package:git_project/view/register_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -17,32 +20,60 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Future<UserCredential> signInWithGoogle() async {
-    if (kIsWeb) {
-      GoogleAuthProvider googleProvider = GoogleAuthProvider();
-
-      googleProvider
-          .addScope('https://www.googleapis.com/auth/contacts.readonly');
-      googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
-
-      // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+  sigout(context) async {
+    if (!kIsWeb) {
+      await GoogleSignIn().signOut();
     } else {
-      // Trigger the authentication flow
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
+      GoogleSignIn _googleSignIn = GoogleSignIn(
+        // Optional clientId
+        clientId:
+            '604293972193-1so9i4hv1cha7k8j1voomr32acf2vr1a.apps.googleusercontent.com',
+        scopes: <String>[
+          'email',
+          'https://www.googleapis.com/auth/contacts.readonly',
+        ],
       );
+      await _googleSignIn.signOut();
+    }
+    print(FirebaseAuth.instance.currentUser?.displayName);
+    await FirebaseAuth.instance.signOut();
+    print(FirebaseAuth.instance.currentUser?.displayName);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(LoginPage.route, (route) => false);
+  }
 
-      // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithCredential(credential);
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      // await sigout(context);
+      if (kIsWeb) {
+        GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+        googleProvider
+            .addScope('https://www.googleapis.com/auth/contacts.readonly');
+        googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+
+        // Once signed in, return the UserCredential
+        return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+      } else {
+        // Trigger the authentication flow
+        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+        // Obtain the auth details from the request
+        final GoogleSignInAuthentication? googleAuth =
+            await googleUser?.authentication;
+
+        // Create a new credential
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
+
+        // Once signed in, return the UserCredential
+        return await FirebaseAuth.instance.signInWithCredential(credential);
+      }
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 
@@ -90,7 +121,24 @@ class _LoginPageState extends State<LoginPage> {
 
                 final user = FirebaseAuth.instance.currentUser;
                 if (user != null) {
-                  Navigator.of(context).pushNamed(RegisterPage.route);
+                  final response = await AuthApi().getUserbyEmail(user.email);
+                  print(response);
+                  if (response != null) {
+                    final userData = DataUserByEmail.fromJson(response);
+                    if (userData.status == 1) {
+                      Navigator.of(context)
+                          .pushReplacementNamed(MainPage.route);
+                    } else {
+                      Navigator.of(context)
+                          .pushReplacementNamed(RegisterPage.route);
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content:
+                          Text("Terjadi kesalahan saat pengambbilan data user"),
+                      duration: Duration(seconds: 2),
+                    ));
+                  }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text("Gagal Masuk"),

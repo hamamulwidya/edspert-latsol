@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:git_project/constants/r.dart';
+import 'package:git_project/models/banner_list.dart';
+import 'package:git_project/models/mata_pelajaran_list.dart';
+import 'package:git_project/repository/latihan_soal_api.dart';
 import 'package:git_project/view/main/latihan_soal/mapel_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,6 +14,46 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  MataPelajaranList? mapelList;
+  bool loading = false;
+  getMapel() async {
+    loading = true;
+    setState(() {});
+    final response =
+        await LatihanSoalApi().getMataPelajara("alitopan@widyaedu.com", "IPA");
+    print(response);
+    if (response != null) {
+      mapelList = MataPelajaranList.fromJson(response);
+      setState(() {});
+    }
+    loading = false;
+    setState(() {});
+  }
+
+  BannerList? banner;
+  // bool loading = false;
+  getBanner() async {
+    loading = true;
+    setState(() {});
+    final response =
+        await LatihanSoalApi().getBanner();
+    print(response);
+    if (response != null) {
+      banner = BannerList.fromJson(response);
+      setState(() {});
+    }
+    loading = false;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMapel();
+    getBanner();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +63,11 @@ class _HomePageState extends State<HomePage> {
           children: [
             _buildUserHomeProfile(),
             _buildTopBanner(context),
-            _buildHomeListMapel(),
+            mapelList == null
+                ? Container(
+                    height: 50,
+                    child: Center(child: CircularProgressIndicator()))
+                : _buildHomeListMapel(mapelList),
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +101,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(height: 35),
-
                 ],
               ),
             )
@@ -64,7 +110,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Container _buildHomeListMapel() {
+  Container _buildHomeListMapel(MataPelajaranList? list) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 21),
       child: Column(
@@ -93,9 +139,15 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
-          MapelWidget(),
-          MapelWidget(),
-          MapelWidget(),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: list!.data!.length,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              final current =list.data![index];
+              return MapelWidget(title: current.courseName! ,);
+            },
+          )
         ],
       ),
     );
@@ -181,8 +233,10 @@ class _HomePageState extends State<HomePage> {
 
 class MapelWidget extends StatelessWidget {
   const MapelWidget({
-    Key? key,
+    Key? key, required this.title,
   }) : super(key: key);
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +262,7 @@ class MapelWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Matematika",
+                title,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
