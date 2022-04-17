@@ -14,8 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  MataPelajaranList? mapelList;
   bool loading = false;
+  MataPelajaranList? mapelList;
   getMapel() async {
     loading = true;
     setState(() {});
@@ -35,8 +35,7 @@ class _HomePageState extends State<HomePage> {
   getBanner() async {
     loading = true;
     setState(() {});
-    final response =
-        await LatihanSoalApi().getBanner();
+    final response = await LatihanSoalApi().getBanner();
     print(response);
     if (response != null) {
       banner = BannerList.fromJson(response);
@@ -87,18 +86,24 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 10),
                   Container(
                     height: 150,
-                    child: ListView.builder(
-                      itemCount: 5,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: ((context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: Image.asset(
-                            R.assets.banneHome,
+                    child: banner == null
+                        ? Container(
+                            child: Center(child: CircularProgressIndicator()),
+                          )
+                        : ListView.builder(
+                            itemCount: 5,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: ((context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: Image.network(
+                                    banner!.data![index].eventImage!,
+                                    errorBuilder: (context, error, stackTrace) {
+                                  return Container();
+                                }),
+                              );
+                            }),
                           ),
-                        );
-                      }),
-                    ),
                   ),
                   SizedBox(height: 35),
                 ],
@@ -127,7 +132,10 @@ class _HomePageState extends State<HomePage> {
               Spacer(),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(MapelPage.route);
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MapelPage(mapel: list!),
+                  ));
+                  // Navigator.of(context).pushNamed(MapelPage.route);
                 },
                 child: Text(
                   "Lihat Semua",
@@ -141,11 +149,15 @@ class _HomePageState extends State<HomePage> {
           ),
           ListView.builder(
             shrinkWrap: true,
-            itemCount: list!.data!.length,
+            itemCount: 3,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              final current =list.data![index];
-              return MapelWidget(title: current.courseName! ,);
+              final current = list!.data![index];
+              return MapelWidget(
+                title: current.courseName!,
+                count: current.jumlahDone.toString(),
+                total: current.jumlahMateri.toString(),
+              );
             },
           )
         ],
@@ -233,10 +245,15 @@ class _HomePageState extends State<HomePage> {
 
 class MapelWidget extends StatelessWidget {
   const MapelWidget({
-    Key? key, required this.title,
+    Key? key,
+    required this.title,
+    required this.count,
+    required this.total,
   }) : super(key: key);
 
   final String title;
+  final String count;
+  final String total;
 
   @override
   Widget build(BuildContext context) {
@@ -269,7 +286,7 @@ class MapelWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                "0/50 Paket latihan soal",
+                "$count/$total Paket latihan soal",
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 12,

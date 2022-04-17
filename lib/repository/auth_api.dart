@@ -63,9 +63,4 @@ class AuthApi {
     return result;
   }
 
-  Future<Map<String, dynamic>?> getLaihanSoal(email) async {
-    final result =
-        await _getRequest(endpoint: ApiUrl.users, param: {"email": email});
-    return result;
-  }
 }

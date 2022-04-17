@@ -149,6 +149,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  get:
+    dependency: "direct main"
+    description:
+      name: get
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.6.1"
   google_fonts:
     dependency: "direct main"
     description:
@@ -247,6 +254,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  modal_progress_hud_nsn:
+    dependency: "direct main"
+    description:
+      name: modal_progress_hud_nsn
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0-nullsafety-1"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   path:
     dependency: transitive
     description:
@@ -324,6 +345,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
+  provider:
+    dependency: "direct main"
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.0.2"
   quiver:
     dependency: transitive
     description:
