@@ -24,17 +24,18 @@ class MapelPage extends StatelessWidget {
             itemBuilder: (context, index) {
               final currentMapel = mapel.data![index];
               return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          MateriPage(id: currentMapel.courseId!),
-                    ));
-                  },
-                  child: MapelWidget(
-                    title: currentMapel.courseName!,
-                    count: currentMapel.jumlahDone.toString(),
-                    total: currentMapel.jumlahDone.toString(),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        PakeSoalPage(id: currentMapel.courseId!),
                   ));
+                },
+                child: MapelWidget(
+                  title: currentMapel.courseName!,
+                  count: currentMapel.jumlahDone.toString(),
+                  total: currentMapel.jumlahDone.toString(),
+                ),
+              );
             }),
       ),
     );

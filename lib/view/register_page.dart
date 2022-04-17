@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:git_project/constants/r.dart';
+import 'package:git_project/models/simple_response.dart';
 import 'package:git_project/repository/auth_api.dart';
 import 'package:git_project/view/login_page.dart';
 import 'package:git_project/view/main_page.dart';
@@ -56,37 +57,36 @@ class _RegisterPageState extends State<RegisterPage> {
           child: ButtonLogin(
             onTap: () async {
               final body = {
-                "user_name": "Edufren",
-                "user_email": "hamamul@widyaedu.com",
-                "user_whatsapp": "082255550496",
-                "user_foto":
+                "nama_lengkap": "Edufren",
+                "email": "hamamul@widyaedu.com",
+                "no_whatsapp": "082255550496",
+                "foto":
                     "https://api.widyaedu.com/assets/uploads/avatar/5a57317764486c77636d396d6157786c_emptyprofile.png",
-                "user_propinsi": "Prov. Aceh",
-                "user_kabupaten": "Kab. Aceh Barat",
-                "sosmed": "@widyaedu",
-                "user_prop_sekolah": "Prov. D.I. Yogyakarta",
-                "user_kab_sekolah": "Kab. Sleman",
-                "user_asal_sekolah": "SMA NEGERI 1 MEULABOH",
+                "akun_instagram": "@edspert",
                 "kelas": "12",
-                "uniqcode": "7552",
-                "referral": "EDUEE2",
-                "date_create": "2022-02-24 08:28:55",
                 "jenjang": "SMA",
-                "user_gender": "Laki-laki",
-                "user_propinsi_id": "060000",
-                "user_prop_sekolah_id": "040000",
-                "user_kab_sekolah_id": "040200",
+                "nama_sekolah": "SMA N 1 Sleman",
+                "gender": "Laki-laki",
+                "asal_provinsi_id": "010000",
+                "asal_kabupaten_id": "010100",
+                "sekolah_provinsi_id": "010000",
+                "sekolah_kabupaten_id": "010100",
+                "user_kab_sekolah_id": "010100",
                 "user_token":
                     "cmZvRr5RRLuLGJX64T-Grb:APA91bF3DkBHPR3NtBqm_f12d9wNd-YvyjJmEkU7f4smY2d8ODJCvGBitC6LExh-GJ27qinvx0NGGkkppyiJIoxG_FDKOSdggLU-g5-W7eJeqzv5JrYUSg4U4xvXU0E_VuiP20gVEUSV",
-                "verified_phone": "true",
-                "user_status": "verified",
-                "apple_id": "empty"
               };
               print(emailController.text);
-             final result = await AuthApi().postRegisterUser(body);
-             
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(MainPage.route, (context) => false);
+              final result = await AuthApi().postRegisterUser(body);
+              SimpleREsponse data = SimpleREsponse.fromJson(result!);
+              if (data.status == 1) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    MainPage.route, (context) => false);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(data.message!),
+                  duration: Duration(seconds: 2),
+                ));
+              }
             },
             backgroundColor: R.colors.primary,
             borderColor: R.colors.primary,

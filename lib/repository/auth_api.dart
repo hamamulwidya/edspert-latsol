@@ -59,7 +59,7 @@ class AuthApi {
   }
 
   Future<Map<String, dynamic>?> postRegisterUser(body) async {
-    final result = await _postRequest(endpoint: ApiUrl.users, body: body);
+    final result = await _postRequest(endpoint: ApiUrl.userRegister, body: body);
     return result;
   }
 
