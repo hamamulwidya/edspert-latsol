@@ -5,9 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "git_project web",
+            "request": "launch",
+            "type": "dart",
+            "deviceId":"chrome",
+            "args": ["--web-port","5000", ]
+
+        },
+        {
             "name": "git_project",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
         },
         {
             "name": "git_project (profile mode)",
