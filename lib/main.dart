@@ -2,8 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:git_project/constants/r.dart';
 import 'package:git_project/view/login_page.dart';
-import 'package:git_project/view/main/latihan_soal/mapel_page.dart';
-import 'package:git_project/view/main/latihan_soal/paket_soal_page.dart';
 import 'package:git_project/view/main_page.dart';
 import 'package:git_project/view/register_page.dart';
 import 'package:git_project/view/splash_screen.dart';
