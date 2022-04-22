@@ -91,20 +91,21 @@ class LatihanSoalApi {
     return result;
   }
 
-  Future<Map<String, dynamic>?> postMulaiKerjakan(email, exercise_id) async {
+  Future<Map<String, dynamic>?> postMulaiKerjakan(email, exerciseId) async {
     final result = await _postRequest(
       endpoint: ApiUrl.latihanKerjakan,
       body: {
-      "exercise_id": exercise_id,
+      "exercise_id": exerciseId,
       "user_email": email,
     }
     );
     return result;
   }
 
-  Future<Map<String, dynamic>?> postInputJawaban(email) async {
+  Future<Map<String, dynamic>?> postInputJawaban(body) async {
     final result = await _postRequest(
       endpoint: ApiUrl.latihanSubmit,
+      body: body,
     );
     return result;
   }
