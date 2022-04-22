@@ -48,8 +48,8 @@ class MyApp extends StatelessWidget {
         LoginPage.route: (context) => const LoginPage(),
         RegisterPage.route: (context) => const RegisterPage(),
         MainPage.route: (context) => const MainPage(),
-        MapelPage.route: (context) => const MapelPage(),
-        PakeSoalPage.route: (context) => const PakeSoalPage(),
+        // MapelPage.route: (context) => const MapelPage(),
+        // PakeSoalPage.route: (context) => const PakeSoalPage(),
       },
     );
   }
