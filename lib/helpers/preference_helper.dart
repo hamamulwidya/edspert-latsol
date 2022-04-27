@@ -17,9 +17,9 @@ class PreferenceHelper {
     await _pref.setString(key, data);
   }
 
-  Future _getString(key) async {
+  Future<String?> _getString(key) async {
     final _pref = await sharePref();
-    await _pref.getString(
+    return _pref.getString(
       key,
     );
   }
@@ -27,12 +27,16 @@ class PreferenceHelper {
   setUserData(UserData userDataModel) async {
     final json = userDataModel.toJson();
     final userDataString = jsonEncode(json);
+    print("simpan");
+    print(userDataString);
     await _saveString(userData, userDataString);
   }
 
   Future<UserData?> getUserData() async {
     final user = await _getString(userData);
-    final jsonUserData = jsonDecode(user);
+    print("data from pref user");
+    print(user);
+    final jsonUserData = jsonDecode(user!);
     final userDataModel = UserData.fromJson(jsonUserData);
     return userDataModel;
   }
