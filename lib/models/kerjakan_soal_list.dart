@@ -31,17 +31,17 @@ class Data {
   String? exerciseIdFk;
   String? bankQuestionId;
   String? questionTitle;
-  Null? questionTitleImg;
+  String? questionTitleImg;
   String? optionA;
-  Null? optionAImg;
+  String? optionAImg;
   String? optionB;
-  Null? optionBImg;
+  String? optionBImg;
   String? optionC;
-  Null? optionCImg;
+  String? optionCImg;
   String? optionD;
-  Null? optionDImg;
+  String? optionDImg;
   String? optionE;
-  Null? optionEImg;
+  String? optionEImg;
   String? studentAnswer;
 
   Data(
