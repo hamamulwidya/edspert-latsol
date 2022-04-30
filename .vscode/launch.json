@@ -10,7 +10,6 @@
             "type": "dart",
             "deviceId":"chrome",
             "args": ["--web-port","5000", ]
-
         },
         {
             "name": "git_project",

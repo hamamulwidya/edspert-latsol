@@ -168,9 +168,9 @@ class ButtonLogin extends StatelessWidget {
     required this.backgroundColor,
     required this.child,
     required this.borderColor,
-    required this.onTap,
+    required this.onTap, this.radius,
   }) : super(key: key);
-
+  final double? radius;
   final Color backgroundColor;
   final Widget child;
   final Color borderColor;
@@ -185,7 +185,7 @@ class ButtonLogin extends StatelessWidget {
           primary: backgroundColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular( radius ?? 25),
             side: BorderSide(
               color: borderColor,
             ),

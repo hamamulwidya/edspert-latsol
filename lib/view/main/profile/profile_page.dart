@@ -5,6 +5,7 @@ import 'package:git_project/constants/r.dart';
 import 'package:git_project/helpers/preference_helper.dart';
 import 'package:git_project/models/user_by_email.dart';
 import 'package:git_project/view/login_page.dart';
+import 'package:git_project/view/main/profile/edit_profile_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -37,18 +38,11 @@ class _ProfilePageState extends State<ProfilePage> {
         centerTitle: true,
         actions: [
           TextButton(
-            onPressed: ()async {
-              if (kIsWeb) {
-                      await GoogleSignIn(
-                              clientId:
-                                  "604293972193-n678jbsfgjp9416d8nnibndjtumviia8.apps.googleusercontent.com")
-                          .signOut();
-                    } else {
-                      await GoogleSignIn().signOut();
-                    }
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        LoginPage.route, (route) => false);
+            onPressed: () async {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return EditProfilePage();
+              }));
             },
             child: Text(
               "Edit",
