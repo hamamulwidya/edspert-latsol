@@ -157,6 +157,16 @@ class _KerjakanLatihanSoalPageState extends State<KerjakanLatihanSoalPage>
                               if (soalList!.data![index].questionTitle != null)
                                 Html(
                                   data: soalList!.data![index].questionTitle!,
+                                  customRender: {
+                                    "table": (context, child) {
+                                      return SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child:
+                                            (context.tree as TableLayoutElement)
+                                                .toWidget(context),
+                                      );
+                                    }
+                                  },
                                   style: {
                                     "body": Style(
                                       padding: EdgeInsets.zero,
