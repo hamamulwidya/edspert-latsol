@@ -35,9 +35,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
     setState(() {});
   }
 
-  initDataUSer() {
+  initDataUSer() async {
     emailController.text = UserEmail.getUserEmail()!;
-    fullNameController.text = UserEmail.getUserDisplayName()!;
+    // fullNameController.text = UserEmail.getUserDisplayName()!;
+   final dataUser = await PreferenceHelper().getUserData();
+    fullNameController.text = dataUser!.userName!;
+    schoolNameController.text = dataUser.userAsalSekolah!;
+    gender = dataUser.userGender!;
+    print(dataUser.userGender!);
+
     setState(() {});
   }
 
@@ -81,13 +87,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 "foto": UserEmail.getUserPhotoUrl(),
               };
               print(json);
-              final result = await AuthApi().postRegister(json);
+              final result = await AuthApi().postUpdateUSer(json);
               if (result.status == Status.success) {
                 final registerResult = UserByEmail.fromJson(result.data!);
                 if (registerResult.status == 1) {
                   await PreferenceHelper().setUserData(registerResult.data!);
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      MainPage.route, (context) => false);
+                  Navigator.pop(context, true);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -150,7 +155,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
-                          primary: gender == "Laki-laki"
+                          primary: gender.toLowerCase() == "Laki-laki".toLowerCase()
                               ? R.colors.primary
                               : Colors.white,
                           shape: RoundedRectangleBorder(
@@ -166,7 +171,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           "Laki-laki",
                           style: TextStyle(
                             fontSize: 14,
-                            color: gender == "Laki-laki"
+                            color: gender.toLowerCase() == "Laki-laki".toLowerCase()
                                 ? Colors.white
                                 : Color(0xff282828),
                           ),

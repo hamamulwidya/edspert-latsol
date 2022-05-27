@@ -33,9 +33,9 @@ class _SplashScreenState extends State<SplashScreen> {
         if (dataUser.status == Status.success) {
           final data = UserByEmail.fromJson(dataUser.data!);
           if (data.status == 1) {
-            Navigator.of(context).pushNamed(MainPage.route);
+            Navigator.of(context).pushReplacementNamed(MainPage.route);
           } else {
-            Navigator.of(context).pushNamed(RegisterPage.route);
+            Navigator.of(context).pushReplacementNamed(RegisterPage.route);
           }
         }
       } else {
