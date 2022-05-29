@@ -42,6 +42,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     fullNameController.text = dataUser!.userName!;
     schoolNameController.text = dataUser.userAsalSekolah!;
     gender = dataUser.userGender!;
+    // selectedClass = dataUser.jenjang!;
     print(dataUser.userGender!);
 
     setState(() {});

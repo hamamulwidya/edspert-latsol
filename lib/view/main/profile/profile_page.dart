@@ -43,8 +43,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   .push(MaterialPageRoute(builder: (BuildContext context) {
                 return EditProfilePage();
               }));
-  print("result");
-  print(result);
+              print("result");
+              print(result);
               if (result == true) {
                 getUserData();
               }
