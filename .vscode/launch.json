@@ -8,7 +8,7 @@
             "name": "latsol physical device",
             "request": "launch",
             "type": "dart",
-            "deviceId":"WK4PKR9LDMLJMJTW"
+            // "deviceId":"WK4PKR9LDMLJMJTW"
         },
         {
             "name": "latsol web",

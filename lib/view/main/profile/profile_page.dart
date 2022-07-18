@@ -34,6 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Container(),
         title: Text("Akun Saya"),
         centerTitle: true,
         actions: [
@@ -178,7 +179,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       Text(
-                        user!.jenjang!,
+                        user?.jenjang ?? "Not Set",
                         style: TextStyle(
                           // color: R.colors.greySubtitleHome,
                           fontSize: 13,

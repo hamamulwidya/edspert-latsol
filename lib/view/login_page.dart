@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
             //   shrinkWrap: true,
             //   physics: NeverScrollableScrollPhysics(),
             //   gridDelegate: gridDelegate, crossAxisCount: null,),
-            ButtonLogin(
+           if(Platform.isIOS) ButtonLogin(
               onTap: () {},
               backgroundColor: Colors.black,
               borderColor: Colors.black,
